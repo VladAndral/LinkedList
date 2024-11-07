@@ -51,25 +51,25 @@ bool LinkedList<T>::insert(T value) {
 
     if (_head == nullptr) { // Empty list
         _head = toInsert;
-    }
-
-    if (toInsert->data < _head->data) { // If insert needs to happen first
-        _head = toInsert;
-        toInsert = _head->next;
-    }
-    
-    Node<T> *checkPointer = _head;
-
-    while (value >= checkPointer->next->data) {
-        if (checkPointer->next == nullptr) {
-            checkPointer->next = toInsert;
+    } else {
+        if (toInsert->data < _head->data) { // If insert needs to happen first
+            _head = toInsert;
+            toInsert = _head->next;
         }
-        // checkPointer++; WRONG!! This is NOT a contiguous block of memory!! Not an array!
-        checkPointer = checkPointer->next;
-    }
+        
+        Node<T> *checkPointer = _head;
 
-    toInsert->next = checkPointer->next;
-    checkPointer->next = toInsert;
+        while (value >= checkPointer->next->data) {
+            if (checkPointer->next == nullptr) {
+                checkPointer->next = toInsert;
+            }
+            // checkPointer++; WRONG!! This is NOT a contiguous block of memory!! Not an array!
+            checkPointer = checkPointer->next;
+        }
+
+        toInsert->next = checkPointer->next;
+        checkPointer->next = toInsert;
+    }
 
     return true;
 
@@ -124,24 +124,22 @@ ostream &operator<<(ostream &stream, const LinkedList<T> linkedList) {
 int main(int argc, char *argv[]) {
     LinkedList<int> testList;
 
-    // Vector<int> 
-
-    testList.push(5);
-    testList.push(9);
-    testList.push(17);
-    testList.push(63);
+    // testList.push(5);
+    // testList.push(9);
+    // testList.push(17);
+    // testList.push(63);
     
-    int temp = 0;
-    testList.pop(temp);
-    testList.peek(temp);
-    testList.printList();
-    testList.emptyThisList();
-    testList.printList();
+    // int temp = 0;
+    // testList.pop(temp);
+    // testList.peek(temp);
+    // testList.printList();
+    // testList.emptyThisList();
+    // testList.printList();
 
-    testList.push(63);
-    testList.push(17);
-    testList.push(9);
-    testList.push(5);
+    // testList.push(63); // Must be in order
+    // testList.push(17);
+    // testList.push(9);
+    // testList.push(5);
     testList.insert(40);
     testList.printList();
     

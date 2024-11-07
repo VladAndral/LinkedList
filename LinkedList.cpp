@@ -51,22 +51,29 @@ bool LinkedList<T>::insert(T value) {
 
     if (_head == nullptr) { // Empty list
         _head = toInsert;
-    } else {
-        if (toInsert->data < _head->data) { // If insert needs to happen first
+    } else if (toInsert->data < _head->data) { // If insert needs to happen first
+            toInsert->next = _head;
             _head = toInsert;
-            toInsert = _head->next;
-        }
+            // if (_head->next == nullptr) { // If insert needs to happen first but head points to null
+            //     toInsert->next = _head;
+            //     _head = toInsert;
+            // } else {
+            //     _head = toInsert;
+            //     toInsert = _head->next;
+            // }
+    } else {
         
         Node<T> *checkPointer = _head;
 
-        while (value >= checkPointer->next->data) {
-            if (checkPointer->next == nullptr) {
-                checkPointer->next = toInsert;
+        while (checkPointer->next != nullptr) { // Iterate thru list
+            if (value <= checkPointer->next->data) { // If the next value is bigger, we know where to insert
+                break;
             }
             // checkPointer++; WRONG!! This is NOT a contiguous block of memory!! Not an array!
             checkPointer = checkPointer->next;
         }
-
+        
+        // Adding the object toInsert points to in the list
         toInsert->next = checkPointer->next;
         checkPointer->next = toInsert;
     }
@@ -141,6 +148,10 @@ int main(int argc, char *argv[]) {
     // testList.push(9);
     // testList.push(5);
     testList.insert(40);
+    testList.insert(17);
+    testList.insert(9);
+    testList.insert(63);
+    testList.insert(5);
     testList.printList();
     
 }
